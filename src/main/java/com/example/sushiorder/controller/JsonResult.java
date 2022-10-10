@@ -1,4 +1,4 @@
-package com.example.controller;
+package com.example.sushiorder.controller;
 
 public class JsonResult<T> {
 
