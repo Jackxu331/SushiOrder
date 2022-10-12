@@ -76,8 +76,8 @@ public class SushiOrderService {
     public Runnable processOrder(Task task, SushiOrder order){
         return() -> {
             try{
-                //get the time remain to finish order and update the startTime for tasks
-                int time = sushiRepository.findById(order.getSushiId()).get().getTimeToMake();
+                //get the time for order to finishe
+                int time = sushiRepository.findById(order.getSushiId()).get().getTimeToMake() - task.getTimeSpent();
 
                 //set order to in-progress
                 int statusId = statusRepository.findByName("in-progress").getId();
@@ -86,8 +86,10 @@ public class SushiOrderService {
                 task.setStartTime(System.nanoTime());
                 task.setStatus("in-progress");
                 //order processing
-                Thread.sleep(1000*(time-task.getTimeSpent()));
-
+                for(int i = 0; i < time; i++){
+                    Thread.sleep(1000);
+                    task.setTimeSpent(task.getTimeSpent() + 1);
+                }
                 //order finished
                 statusId = statusRepository.findByName("finished").getId();
                 task.setStatus("finished");
