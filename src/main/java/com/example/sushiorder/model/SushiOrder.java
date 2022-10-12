@@ -1,15 +1,13 @@
 package com.example.sushiorder.model;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
+import javax.persistence.*;
 import java.util.Date;
 
 @Entity
 public class SushiOrder {
 
     @Id
-    @Column
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int id;
     @Column(name = "sushi_id")
     private int sushiId;
